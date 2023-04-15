@@ -1,6 +1,6 @@
 {
   "name": "af-echo-ts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Echo",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -37,7 +37,7 @@
     "access": "public"
   },
   "files": [
-    "dist/cjs/src",
+    "dist/cjs",
     "dist/esm",
     "dist/types",
     "src"
