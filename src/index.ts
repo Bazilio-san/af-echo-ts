@@ -1,4 +1,13 @@
+// export {
+//   echo,
+//   ILogLevel,
+//   TEchoOptions,
+//   TLogLevelName,
+//   TLogLevelId,
+// } from './echo'
 /* eslint-disable no-console,no-constructor-return */
+// noinspection JSUnusedGlobalSymbols
+
 import {
   cyanN, defaultN, greenN, greyN, magenta, magentaN, redN, reset, underlineOff, yellowN,
 } from 'af-color';
@@ -94,11 +103,6 @@ const _c = (options: TEchoOptions = {}): string => {
   return color;
 };
 
-export interface IEchoOptions {
-  loggerLevel?: TLogLevelName,
-  prefix?: string,
-}
-
 /**
  * The class implements the functions of logging to the console with the ability
  * to colorize the text and specify the logging level.
@@ -110,7 +114,10 @@ class Echo extends Function {
 
   loggerLevel: TLogLevelName;
 
-  constructor (options: IEchoOptions) {
+  constructor (options: {
+    loggerLevel?: TLogLevelName,
+    prefix?: string,
+  }) {
     super();
     this.prefix = String(options.prefix || '');
     let { loggerLevel } = options;
@@ -139,7 +146,7 @@ class Echo extends Function {
         this.loggerLevel = newLogLevelName;
       }
     } else if (logLevelIndexes[level] != null) {
-        this.loggerLevel = level;
+      this.loggerLevel = level;
     }
   }
 

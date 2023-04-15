@@ -1,8 +1,8 @@
 {
   "name": "af-echo-ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Echo",
-  "main": "./dist/cjs/src/index.js",
+  "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "author": "Viacheslav Makarov <vvmakarov@bazilio.ru>",
