@@ -1,0 +1,54 @@
+{
+  "name": "af-echo-ts",
+  "version": "1.0.1",
+  "description": "Echo",
+  "main": "./dist/cjs/src/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "author": "Viacheslav Makarov <vvmakarov@bazilio.ru>",
+  "license": "ISC",
+  "keywords": [
+    "echo"
+  ],
+  "productName": "AF echo (TS)",
+  "scripts": {
+    "clean": "shx rm -rf dist/*",
+    "build": "tsc -b tsconfig.json tsconfig.esm.json tsconfig.types.json",
+    "lint": "eslint . --ext .ts ",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "test": "jest --config jest.config.js",
+    "pub": "npm run lint:fix && npm run clean && npm run build && npm publish",
+    "cb": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "af-color": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "eslint-config-af-22": "^1.0.13",
+    "shx": "^0.3.4",
+    "typescript": "^5.0.4"
+  },
+  "np": {
+    "yarn": false,
+    "contents": "."
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/cjs/src",
+    "dist/esm",
+    "dist/types",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bazilio-san/af-tools.git"
+  },
+  "engines": {
+    "node": ">= 14",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
