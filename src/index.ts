@@ -1,10 +1,3 @@
-// export {
-//   echo,
-//   ILogLevel,
-//   TEchoOptions,
-//   TLogLevelName,
-//   TLogLevelId,
-// } from './echo'
 /* eslint-disable no-console,no-constructor-return */
 // noinspection JSUnusedGlobalSymbols
 
