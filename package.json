@@ -1,6 +1,6 @@
 {
   "name": "af-echo-ts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Echo",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -44,7 +44,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bazilio-san/af-tools.git"
+    "url": "git+https://github.com/Bazilio-san/af-echo-ts.git"
   },
   "engines": {
     "node": ">= 14",
