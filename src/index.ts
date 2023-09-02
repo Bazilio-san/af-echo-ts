@@ -112,7 +112,7 @@ export class Echo extends Function {
     prefix?: string,
   }) {
     super();
-    this.prefix = String(options.prefix || '');
+    this.prefix = String(options.prefix || process.env.LOGGER_PREFIX || '');
     let { loggerLevel } = options;
     if (!loggerLevel) {
       const ll = process.env.LOGGER_LEVEL;
