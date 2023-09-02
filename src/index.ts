@@ -100,7 +100,7 @@ const _c = (options: TEchoOptions = {}): string => {
  * The class implements the functions of logging to the console with the ability
  * to colorize the text and specify the logging level.
  */
-class Echo extends Function {
+export class Echo extends Function {
   prefix: string;
 
   private _lastLogMessage: Nullable<string>;
