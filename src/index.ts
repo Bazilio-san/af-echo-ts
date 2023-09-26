@@ -33,7 +33,7 @@ export interface TEchoOptions {
   estimate?: any,
   estimateReset?: boolean,
   prettyJSON?: boolean,
-  linesBefore?: number,
+  emptyLinesBefore?: number,
 }
 
 const echoOptionsProps = [
@@ -57,6 +57,8 @@ const isEchoOptions = (obj: any): boolean => {
   const props = Object.keys(obj);
   return echoOptionsProps.some((prop) => props.includes(prop));
 };
+
+export const clearESC = (str: string) => str.replace(/\x1b\[[\d;]+m/ig, '');
 
 const logLevelsMeta = [
   { name: 'silly', colorNum: magentaN, index: 0 },
@@ -190,7 +192,7 @@ export class Echo extends Function {
       return;
     }
 
-    let msg: string = '';
+    let msg: string | Error | any = '';
 
     let title: string = '';
 
@@ -215,22 +217,13 @@ export class Echo extends Function {
       default:
         [msg] = args;
     }
-    if (typeof msg === 'object') {
-      if (options.prettyJSON) {
-        msg = JSON.stringify(msg, undefined, 2);
-      } else {
-        msg = JSON.stringify(msg);
-      }
-    }
-    if (/^ *SELECT /.test(msg)) {
-      msg = `${magenta}\n${msg}\n`;
-    }
+
     const {
       colorNum,
       consoleFunction = 'log',
       estimate,
       estimateReset = false,
-      linesBefore = 0,
+      emptyLinesBefore = 0,
     } = options;
 
     options.colorNum = colorNum || levelColors[levelName] || greyN;
@@ -238,16 +231,39 @@ export class Echo extends Function {
     if (estimate) {
       title = `${estimate.getTaken(estimateReset, true)} ${title || ''}`;
     }
-    const lb = Number(linesBefore) ? '\n'.repeat(Number(linesBefore)) : '';
+    const lb = Number(emptyLinesBefore) ? '\n'.repeat(Number(emptyLinesBefore)) : '';
     const cTitle = title ? `\x1b[1m${title}: \x1b[21m` : '';
+
+    const isError = msg instanceof Error;
+    if (!isError && typeof msg === 'object') {
+      if (options.prettyJSON) {
+        msg = JSON.stringify(msg, undefined, 2);
+      } else {
+        msg = JSON.stringify(msg);
+      }
+    }
+    if (typeof msg === 'string' && /^ *SELECT /.test(msg)) {
+      msg = `${magenta}\n${msg}\n`;
+    }
+
     if (consoleFunction === 'dir') {
       console.dir(msg);
       this._lastLogMessage = msg;
     } else {
-      const prefix = options.prefix ? `${color}${underlineOff}${options.prefix}` : this.prefix;
-      const logMessage = `${lb}${prefix}${color}${cTitle}${underlineOff}${color}${msg}${reset}`;
-      console.log(logMessage);
-      this._lastLogMessage = logMessage;
+      let prefix = options.prefix ? `${color}${underlineOff}${options.prefix}` : this.prefix;
+      prefix = `${lb}${prefix}${color}${cTitle}${underlineOff}${reset}`; // ${color}${msg}${reset}
+      if (!clearESC(prefix).replace(/\s/g, '')) {
+        prefix = '';
+      }
+      if (!isError) {
+        msg = `${color}${msg}${reset}`;
+      }
+      if (prefix) {
+        console.log(prefix, msg);
+      } else {
+        console.log(msg);
+      }
+      this._lastLogMessage = msg;
     }
   }
 
