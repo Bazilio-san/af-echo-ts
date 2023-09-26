@@ -257,6 +257,8 @@ export class Echo extends Function {
       }
       if (!isError) {
         msg = `${color}${msg}${reset}`;
+      } else if (msg.message) {
+          msg.message = `${color}${msg.message}${reset}`;
       }
       if (prefix) {
         console.log(prefix, msg);
